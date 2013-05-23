@@ -34,5 +34,4 @@ print ('removing '+str(removePermission))
 removePermission = removePermission.split(',')
 
 for lineNumber in removePermission:
-	print(type(lineNumber))
 	replace_line('./TestApp/AndroidManifest.xml',int(lineNumber),'')
