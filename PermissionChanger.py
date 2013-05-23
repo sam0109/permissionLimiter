@@ -6,6 +6,7 @@ import re
 def replace_line(file_name, line_num, text):
     lines = open(file_name, 'r').readlines()
     lines[line_num] = text
+    lines.close()
     out = open(file_name, 'w')
     out.writelines(lines)
     out.close()
@@ -22,12 +23,13 @@ def readPermissions():
 			permission[j] = line
 		j += 1
 	return permission
+
 permission = readPermissions()
 print '\npermissions currently in the .apk file in this directory:\n'
 for value in permission:
 	print str(value) + str(permission[value])
-removePermission = input('permissions to remove (sparated by commas, e.g. "1,5,12"):')
+removePermission = raw_input('permissions to remove (sparated by commas, e.g. "1,5,12"):')
 print ('removing '+str(removePermission))
-
-for permission in removePermission:
-	replace_line('./TestApp/AndroidManifest.xml',permission,'')
+removePermission.split(',')
+for permissionToRemove in removePermission:
+	replace_line('./TestApp/AndroidManifest.xml',permissionToRemove,'')
