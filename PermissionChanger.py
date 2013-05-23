@@ -3,13 +3,6 @@ import subprocess
 import os
 import re
 
-def replace_line(file_name, line_num, text):
-	lines = open(file_name, 'r').readlines()
-	lines[line_num] = text
-	out = open(file_name, 'w')
-	out.writelines(lines)
-	out.close()
-
 def readPermissions():
 	permission = {}
 	subprocess.call("apktool d -f ./TestApp.apk", shell=True)
@@ -33,5 +26,10 @@ removePermission = raw_input('permissions to remove (sparated by commas, e.g. "1
 print ('removing '+str(removePermission))
 removePermission = removePermission.split(',')
 
+lines = open('./TestApp/AndroidManifest.xml', 'r').readlines()
 for lineNumber in removePermission:
-	replace_line('./TestApp/AndroidManifest.xml',int(lineNumber),'')
+	lines[int(lineNumber)] = ''
+
+out = open('./TestApp/AndroidManifest.xml', 'w')
+out.writelines(lines)
+out.close()
